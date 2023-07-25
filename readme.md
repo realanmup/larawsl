@@ -23,7 +23,7 @@ Using larawsl is straightforward. Simply download the `larawsl.sh` script and ru
 To install larawsl, open a terminal in your Ubuntu 22.04 WSL and run the following command:
 
 ```
-curl -sSfL https://raw.githubusercontent.com/realanmup/larawsl/main/larawsl.sh | bash
+curl -sSfL https://raw.githubusercontent.com/realanmup/larawsl/main/larawsl | bash
 ```
 
 For more detailed instructions, refer to the [Installation Guide](https://github.com/realanmup/larawsl/blob/main/Installation.md).
