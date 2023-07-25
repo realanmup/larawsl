@@ -1,0 +1,126 @@
+#!/bin/bash
+
+# Function to run 'apt update' only if it hasn't been run recently
+check_and_update_apt() {
+    if [ "$UPDATED_NOW" != "true" ]; then
+        sudo apt update
+        UPDATED_NOW=true
+    fi
+}
+
+# Function to install PHP 8.1 and required extensions
+install_php() {
+    check_and_update_apt
+    sudo apt install -y php8.1 php8.1-bcmath php8.1-mbstring \
+        php8.1-curl php8.1-xml php8.1-zip \
+        php8.1-mysql php8.1-pgsql php8.1-fpm \
+        php8.1-imagick php8.1-redis php8.1-gd \
+        php8.1-gmp php8.1-mongodb php8.1-sqlite3
+}
+
+# Function to install additional apt services
+install_additional_services() {
+    check_and_update_apt
+    sudo apt install -y curl git zip unzip libpng-dev \
+        nano supervisor imagemagick
+}
+
+# Function to install Node.js 16 and set it as default
+install_nodejs_16() {
+    check_and_update_apt
+    sudo apt install -y curl
+    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    sudo apt install -y nodejs
+    sudo npm install -g n
+    sudo n 16
+}
+
+# Function to start all services
+start_services() {
+    sudo service mysql start
+    sudo service redis-server start
+    sudo service nginx start
+    sudo service php8.1-fpm start
+}
+
+# Function to stop all services
+stop_services() {
+    sudo service mysql stop
+    sudo service redis-server stop
+    sudo service nginx stop
+    sudo service php8.1-fpm stop
+}
+
+# Function to tail logs of specified service
+tail_logs() {
+    case $1 in
+        "nginx") sudo tail -f /var/log/nginx/access.log /var/log/nginx/error.log ;;
+        "redis") sudo tail -f /var/log/redis/redis-server.log ;;
+        "mysql") sudo tail -f /var/log/mysql/error.log ;;
+        *) echo "Unknown service. Available options: nginx, redis, mysql"; exit 1 ;;
+    esac
+}
+
+# Function to show status of all services
+show_status_all() {
+    echo "MySQL status:"
+    sudo service mysql status
+    echo "Redis status:"
+    sudo service redis-server status
+    echo "Nginx status:"
+    sudo service nginx status
+    echo "PHP status:"
+    sudo service php8.1-fpm status
+}
+
+# Function to show status of a specific service
+show_status_service() {
+    case $1 in
+        "mysql") sudo service mysql status ;;
+        "redis") sudo service redis-server status ;;
+        "nginx") sudo service nginx status ;;
+        "php") sudo service php8.1-fpm status ;;
+        *) echo "Unknown service. Available options: mysql, redis, nginx, php"; exit 1 ;;
+    esac
+}
+
+# Function to show help
+show_help() {
+    echo "Usage: sh larawsl.sh [command] [service]"
+    echo "Commands:"
+    echo "  start               Start all services"
+    echo "  stop                Stop all services"
+    echo "  logs [service]      Tail logs from nginx, redis, or mysql"
+    echo "  install [service]   Install a specific service (mysql, redis, nginx, php, composer, nodejs, npm, n, phpmyadmin)"
+    echo "  install all         Install all services at once"
+    echo "  status              Show status of all services"
+    echo "  status [service]    Show status of a specific service"
+    echo "  help                Show this help"
+}
+
+# Main script
+case $1 in
+    "start") start_services ;;
+    "stop") stop_services ;;
+    "logs") tail_logs $2 ;;
+    "install")
+        case $2 in
+            "php") install_php ;;
+            "all")
+                install_php
+                install_additional_services
+                install_nodejs_16
+                ;;
+            *) echo "Unknown service. Available options: php, all"; exit 1 ;;
+        esac
+        ;;
+    "status")
+        if [ -z "$2" ]; then
+            show_status_all
+        else
+            show_status_service $2
+        fi
+        ;;
+    "help") show_help ;;
+    *) echo "Unknown command. Use 'larawsl help' to see available commands."; exit 1 ;;
+esac

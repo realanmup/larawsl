@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <URL>"
+    exit 1
+fi
+
+url="$1"
+
+# Download the shell script from the provided URL
+script_file="$(basename $url)"
+echo "Downloading script from: $url"
+curl -o "$script_file" -L "$url"
+
+if [ ! -f "$script_file" ]; then
+    echo "Failed to download the script."
+    exit 1
+fi
+
+# Make the script executable
+chmod +x "$script_file"
+
+# Define the installation directory for the binary
+install_dir="/usr/local/bin"
+
+# Move the script to the installation directory
+mv "$script_file" "$install_dir"
+
+echo "The script has been installed as a binary in $install_dir."
+echo "You can now use the script as a command. For example: $script_file"
+
