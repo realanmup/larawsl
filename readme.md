@@ -1,5 +1,6 @@
 **larawsl - Development Environment Setup Script for Ubuntu 22.04 (WSL)**
 
+![larawsl Logo](https://raw.githubusercontent.com/realanmup/larawsl/main/larawsl.png) 
 
 **Overview**
 
