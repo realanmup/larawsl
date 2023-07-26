@@ -106,6 +106,8 @@ case $1 in
     "install")
         case $2 in
             "php") install_php ;;
+            "nodejs") install_nodejs_16 ;;
+            "additional") install_additional_services ;;
             "all")
                 install_php
                 install_additional_services
