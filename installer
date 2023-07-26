@@ -12,7 +12,7 @@ check_if_larawsl_installed() {
 install_larawsl() {
     check_if_larawsl_installed
     echo "Downloading and installing larawsl..."
-    curl -sSfL https://raw.githubusercontent.com/realanmup/larawsl/main/larawsl -o larawsl.sh
+    curl -sSfL https://raw.githubusercontent.com/realanmup/larawsl/main/larawsl -o larawsl
     chmod +x larawsl
     sudo mv larawsl /usr/local/bin/larawsl
     echo "larawsl is now installed. You can start using it by running 'larawsl' in the terminal."
