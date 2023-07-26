@@ -24,7 +24,7 @@ Using larawsl is straightforward. Simply download the `larawsl.sh` script and ru
 To install larawsl, open a terminal in your Ubuntu 22.04 WSL and run the following command:
 
 ```
-curl -sSfL https://raw.githubusercontent.com/realanmup/larawsl/main/larawsl | bash
+curl -sSfL https://raw.githubusercontent.com/realanmup/larawsl/main/installer | bash
 ```
 
 For more detailed instructions, refer to the [Installation Guide](https://github.com/realanmup/larawsl/blob/main/Installation.md).
@@ -39,6 +39,6 @@ larawsl is open-source software distributed under the [MIT License](https://gith
 
 **Support**
 
-If you have any questions or need assistance with larawsl, you can reach out to us on [GitHub Discussions](https://github.com/realanmup/larawsl/discussions) or contact the project maintainers at [email address].
+If you have any questions or need assistance with larawsl, you can reach out to us on [GitHub Discussions](https://github.com/realanmup/larawsl/discussions) or contact the project maintainers at `realanmup@gmail.com`.
 
 Let larawsl streamline your development environment setup and empower you to focus on building amazing projects with ease! Happy coding!
